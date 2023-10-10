@@ -1,7 +1,6 @@
 "use client";
 
 import { InputForm } from "@/components/app-components/user-input";
-import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
 export default function Home() {

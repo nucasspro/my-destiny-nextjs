@@ -1,22 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { PopoverTrigger } from "@radix-ui/react-popover";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Calendar } from "../ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -24,29 +16,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Popover, PopoverContent } from "../ui/popover";
-
-const UserSchema = z.object({
-  name: z.string({ required_error: "It required." }).min(1),
-  birthday: z
-    .date({ required_error: "It required." })
-    .min(new Date("1900-01-01"))
-    .max(new Date()),
-});
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { TUserSchema, UserSchema } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
+import vi from "date-fns/locale/vi";
+import { CalendarIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+// import "react-day-picker/src/style.css";
 
 export function InputForm() {
-  const form = useForm<z.infer<typeof UserSchema>>({
+  const form = useForm<TUserSchema>({
     resolver: zodResolver(UserSchema),
     mode: "onChange",
   });
 
-  function onSubmit(data: z.infer<typeof UserSchema>) {
-    console.log(data);
+  // TODO: longdang - Use vietnam date format
+  function onSubmit(data: TUserSchema) {
+    // Navigate to the next page
+    const queryParams = new URLSearchParams({
+      name: data.name,
+      birthday: data.birthday.toString(),
+    });
+
+    window.location.href = `/destiny?${queryParams}`;
   }
 
   return (
-    <Card>
+    <Card className="w-2/4">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">User info</CardTitle>
         <CardDescription>Enter your name and birthday</CardDescription>
@@ -81,12 +85,12 @@ export function InputForm() {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] pl-3 text-left font-normal",
+                            "pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
                           {field.value ? (
-                            format(field.value, "PPP")
+                            format(field.value, "dd/MM/yyyy", { locale: vi })
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -94,9 +98,13 @@ export function InputForm() {
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="p-0" align="start">
                       <Calendar
                         mode="single"
+                        captionLayout="dropdown-buttons"
+                        fromYear={1901}
+                        toYear={new Date().getFullYear()}
+                        locale={vi}
                         selected={field.value}
                         onSelect={field.onChange}
                         disabled={(date) =>
