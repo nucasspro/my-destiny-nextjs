@@ -24,6 +24,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TUserSchema, UserSchema } from "@/lib/types";
+import { createUser } from "@/lib/uesr-type";
+import { chuyenSangAscii } from "@/lib/user-utils";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -38,15 +40,20 @@ export function InputForm() {
     mode: "onChange",
   });
 
-  // TODO: longdang - Use vietnam date format
   function onSubmit(data: TUserSchema) {
     // Navigate to the next page
+
+    const user = createUser(data.name, data.birthday);
+    debugger;
+    console.log("user", user);
+
     const queryParams = new URLSearchParams({
       name: data.name,
-      birthday: data.birthday.toString(),
+      birthday: format(data.birthday, "dd/MM/yyyy", { locale: vi }),
     });
 
-    window.location.href = `/destiny?${queryParams}`;
+    console.log(queryParams);
+    // window.location.href = `/destiny?${queryParams}`;
   }
 
   return (
