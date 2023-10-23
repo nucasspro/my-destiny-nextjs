@@ -22,19 +22,13 @@ export function khongTrongTapSoNguyen(source: number[]): number[] {
   return source.filter((number) => tapSoNguyen.includes(number));
 }
 
-// export function chuyenSangAscii(source: string): string {
-//   let normalizedCharacters = "";
-
-//   const normalizedString = source.normalize("NFD");
-
-//   for (const char of normalizedString) {
-//     if (!char.match(/\p{Mark}/u)) {
-//       normalizedCharacters += char;
-//     }
-//   }
-
-//   return normalizedCharacters;
-// }
+export function chuyenSangAscii(source: string): string {
+  return source
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D");
+}
 
 export function tongCacChuSo(source: number): number {
   let sum = 0;
@@ -46,14 +40,6 @@ export function tongCacChuSo(source: number): number {
 }
 
 export function tinhTong(tong: number, kiemTraBasic: boolean = false): number {
-  while (tong >= 10 && (!kiemTraBasic || !kiemTraTapBasic(tong))) {
-    tong = tinhTong(tong);
-  }
-
-  return tong;
-}
-
-export function tinhTong2(tong: number, kiemTraBasic: boolean = false): number {
   const digitSum = tong
     .toString()
     .split("")
@@ -64,5 +50,5 @@ export function tinhTong2(tong: number, kiemTraBasic: boolean = false): number {
 
   if (tapBasic.includes(digitSum)) return digitSum;
 
-  return tinhTong2(digitSum);
+  return tinhTong(digitSum);
 }

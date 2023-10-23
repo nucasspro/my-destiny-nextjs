@@ -1,4 +1,4 @@
-import { tinhTong, tongCacChuSo } from "./user-utils";
+import { chuyenSangAscii, tinhTong, tongCacChuSo } from "./user-utils";
 
 type UserDetails = {
   chiSoDuongDoi?: number;
@@ -58,26 +58,25 @@ type User = {
 };
 
 export function createUser(hoVaTen: string, ngayThangNamSinh: Date): User {
-  const hoVaTenAscii = ""; // = Utils.ChuyenSangAscii(HoVaTen);
+  const hoVaTenAscii = chuyenSangAscii(hoVaTen);
   const danhSachCacChuTrongTenAscii = hoVaTenAscii.split(" ");
 
   const tongCacSoCuaNgaySinh = tongCacChuSo(ngayThangNamSinh.getDay());
   const tongCacSoCuaThangSinh = tongCacChuSo(ngayThangNamSinh.getMonth());
   const tongCacSoCuaNamSinh = tongCacChuSo(ngayThangNamSinh.getFullYear());
 
-  debugger;
-  const tongCacSoCuaNgaySinhTrongTapBasis = tinhTong(
-    ngayThangNamSinh.getDate(),
-    true
-  );
-  const tongCacSoCuaThangSinhTrongTapBasis = tinhTong(
-    ngayThangNamSinh.getMonth(),
-    true
-  );
-  const tongCacSoCuaNamSinhTrongTapBasis = tinhTong(
-    ngayThangNamSinh.getFullYear(),
-    true
-  );
+  //   const tongCacSoCuaNgaySinhTrongTapBasis = tinhTong(
+  //     ngayThangNamSinh.getDate(),
+  //     true
+  //   );
+  //   const tongCacSoCuaThangSinhTrongTapBasis = tinhTong(
+  //     ngayThangNamSinh.getMonth(),
+  //     true
+  //   );
+  //   const tongCacSoCuaNamSinhTrongTapBasis = tinhTong(
+  //     ngayThangNamSinh.getFullYear(),
+  //     true
+  //   );
 
   const userDetails = null;
 
@@ -89,9 +88,12 @@ export function createUser(hoVaTen: string, ngayThangNamSinh: Date): User {
     tongCacSoCuaNgaySinh,
     tongCacSoCuaThangSinh,
     tongCacSoCuaNamSinh,
-    tongCacSoCuaNgaySinhTrongTapBasis,
-    tongCacSoCuaThangSinhTrongTapBasis,
-    tongCacSoCuaNamSinhTrongTapBasis,
+    tongCacSoCuaNgaySinhTrongTapBasis: 0,
+    tongCacSoCuaThangSinhTrongTapBasis: 0,
+    tongCacSoCuaNamSinhTrongTapBasis: 0,
     userDetails,
   };
+}
+function ChuyenSangAscii(HoVaTen: any) {
+  throw new Error("Function not implemented.");
 }
