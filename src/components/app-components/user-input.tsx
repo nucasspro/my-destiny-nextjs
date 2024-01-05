@@ -28,10 +28,10 @@ import { createUser } from "@/lib/uesr-type";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import vi from "date-fns/locale/vi";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-// import "react-day-picker/src/style.css";
+import { vi } from "date-fns/locale";
+import "react-day-picker/src/style.css";
 
 export function InputForm() {
   const form = useForm<TUserSchema>({
@@ -48,8 +48,7 @@ export function InputForm() {
 
     const queryParams = new URLSearchParams({
       name: data.name,
-      birthday: format(data.birthday, "dd/MM/yyyy"),
-      //   birthday: format(data.birthday, "dd/MM/yyyy", { locale: vi }),
+      birthday: format(data.birthday, "dd/MM/yyyy", { locale: vi }),
     });
 
     console.log(queryParams);
@@ -97,8 +96,7 @@ export function InputForm() {
                           )}
                         >
                           {field.value ? (
-                            // format(field.value, "dd/MM/yyyy", { locale: vi })
-                            format(field.value, "dd/MM/yyyy")
+                            format(field.value, "dd/MM/yyyy", { locale: vi })
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -109,10 +107,10 @@ export function InputForm() {
                     <PopoverContent className="p-0" align="start">
                       <Calendar
                         mode="single"
-                        captionLayout="dropdown-buttons"
+                        captionLayout="dropdown"
                         fromYear={1901}
                         toYear={new Date().getFullYear()}
-                        // locale={vi}
+                        locale={vi}
                         selected={field.value}
                         onSelect={field.onChange}
                         disabled={(date) =>
