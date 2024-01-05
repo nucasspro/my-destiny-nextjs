@@ -48,7 +48,8 @@ export function InputForm() {
 
     const queryParams = new URLSearchParams({
       name: data.name,
-      birthday: format(data.birthday, "dd/MM/yyyy", { locale: vi }),
+      birthday: format(data.birthday, "dd/MM/yyyy"),
+      //   birthday: format(data.birthday, "dd/MM/yyyy", { locale: vi }),
     });
 
     console.log(queryParams);
@@ -96,7 +97,8 @@ export function InputForm() {
                           )}
                         >
                           {field.value ? (
-                            format(field.value, "dd/MM/yyyy", { locale: vi })
+                            // format(field.value, "dd/MM/yyyy", { locale: vi })
+                            format(field.value, "dd/MM/yyyy")
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -110,7 +112,7 @@ export function InputForm() {
                         captionLayout="dropdown-buttons"
                         fromYear={1901}
                         toYear={new Date().getFullYear()}
-                        locale={vi}
+                        // locale={vi}
                         selected={field.value}
                         onSelect={field.onChange}
                         disabled={(date) =>

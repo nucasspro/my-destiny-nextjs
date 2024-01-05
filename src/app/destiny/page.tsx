@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { TUserSchema } from "@/lib/types";
 import Link from "next/link";
